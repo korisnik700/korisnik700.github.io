@@ -1,0 +1,38 @@
+<style>
+  #list { list-style: none; padding: 0; margin: 12px 0; }
+  #list li {
+    font-size: 24px;
+    padding: 14px 16px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background: #f1f1f1;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+  }
+  #list li:hover { background: #e0e0e0; }
+  #list li.active { background: #4caf50; color: #fff; }
+</style>
+
+<audio id="player" controls style="width:100%"></audio>
+<ul id="list"></ul>
+
+<script>
+const stations = [
+  { name: "Example Station 1", url: "https://example.com/stream1.mp3" },
+  { name: "Example Station 2", url: "https://example.com/stream2.aac" }
+];
+const player = document.getElementById("player");
+const list = document.getElementById("list");
+
+stations.forEach(s => {
+  const li = document.createElement("li");
+  li.textContent = s.name;
+  li.onclick = () => {
+    document.querySelectorAll("#list li").forEach(x => x.classList.remove("active"));
+    li.classList.add("active");
+    player.src = s.url;
+    player.play();
+  };
+  list.appendChild(li);
+});
+</script>
