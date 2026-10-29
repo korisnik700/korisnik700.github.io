@@ -1,5 +1,5 @@
 # My Radio Player
-A simple web page for listening to internet radio stations.
+A simple web page for listening to Croatian internet radio stations.
 
 ## Features
 - List of stations
