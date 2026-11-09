@@ -1,11 +1,21 @@
-#
 <style>
-  #list{list-style:none;padding:0}
-  #list li{font-size:24px;padding:14px;margin:6px 0;border-radius:8px;background:#f1f1f1;cursor:pointer}
-  #list li.active{background:#4caf50;color:#fff}
-</style></head><body>
+  #list { list-style: none; padding: 0; margin: 12px 0; }
+  #list li {
+    font-size: 24px;
+    padding: 14px 16px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background: #f1f1f1;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+  }
+  #list li:hover { background: #e0e0e0; }
+  #list li.active { background: #4caf50; color: #fff; }
+</style>
+
 <audio id="player" controls style="width:100%"></audio>
 <ul id="list"></ul>
+
 <script>
 const stations = [
   { name: "TOP RADIO", url: "https://c5.hostingcentar.com/streams/topradio/" },
@@ -17,6 +27,19 @@ const stations = [
   { name: "RADIO KAJ", url: "http://s8.iqstreaming.com:8050/;" },
   { name: " NAXI EX YU RADIO ", url: " https://naxidigital-exyu128ssl.streaming.rs:8242/ "},
   { name: " NAXI CAFE RADIO ", url: " https://naxidigital-cafe128ssl.streaming.rs:8022/; "}
- 
 ];
+const player = document.getElementById("player");
+const list = document.getElementById("list");
 
+stations.forEach(s => {
+  const li = document.createElement("li");
+  li.textContent = s.name;
+  li.onclick = () => {
+    document.querySelectorAll("#list li").forEach(x => x.classList.remove("active"));
+    li.classList.add("active");
+    player.src = s.url;
+    player.play();
+  };
+  list.appendChild(li);
+});
+</script>
