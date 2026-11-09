@@ -1,18 +1,4 @@
-#include <WiFi.h>
-#include <WebServer.h>
-
-const char* ssid = "mobiteli";
-const char* pass = "gjs451_nmk$%QD29";
-WebServer server(80);
-
-const char PAGE[] PROGMEM = R"rawliteral(
-<!DOCTYPE html><html><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#4caf50">
-<link rel="icon" href="/icon.svg">
-
+#
 <style>
   #list{list-style:none;padding:0}
   #list li{font-size:24px;padding:14px;margin:6px 0;border-radius:8px;background:#f1f1f1;cursor:pointer}
@@ -34,35 +20,3 @@ const stations = [
  
 ];
 
-
-const p=document.getElementById("player"),l=document.getElementById("list");
-stations.forEach(s=>{const li=document.createElement("li");li.textContent=s.name;
-li.onclick=()=>{document.querySelectorAll("#list li").forEach(x=>x.classList.remove("active"));
-li.classList.add("active");p.src=s.url;p.play();};l.appendChild(li);});
-</script></body></html>
-)rawliteral";
-
-const char MANIFEST[] PROGMEM = R"rawliteral({
-  "name":"Radio","short_name":"Radio","start_url":"/","display":"standalone",
-  "background_color":"#ffffff","theme_color":"#4caf50",
-  "icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml"}]
-  })rawliteral";
-
-  const char ICON[] PROGMEM = R"rawliteral(<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#4caf50"/><polygon points="38,30 38,70 72,50" fill="#fff"/></svg>)rawliteral";
-
-
-void setup() {
-  WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED) delay(500);
-  Serial.begin(115200);
-  Serial.println(WiFi.localIP());
-  server.on("/", []() { server.send_P(200, "text/html", PAGE); });
-  server.on("/manifest.json", []() { server.send_P(200, "application/manifest+json", MANIFEST); });
-  server.on("/icon.svg",      []() { server.send_P(200, "image/svg+xml", ICON); });
-  
-  server.begin();
-}
-
-void loop() {
-  server.handleClient(); 
-}
